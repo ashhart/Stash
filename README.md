@@ -57,14 +57,25 @@ $ stash
 ## Install
 
 ```bash
-brew tap SectorOPS/Stash
-brew install stash
+brew tap SectorOPS/Stash https://github.com/SectorOPS/Stash
+brew install SectorOPS/Stash/stash
 ```
 
 Or in one shot:
 
 ```bash
 brew install SectorOPS/Stash/stash
+```
+
+> `brew install stash` (unqualified) matches the unrelated **Stash.app** proxy
+> tool's cask, not this CLI. Always use the fully-qualified
+> `SectorOPS/Stash/stash` form. If you'd previously installed the Cask, you
+> may also need `brew link --overwrite stash` after installing ours.
+
+To upgrade:
+
+```bash
+brew update && brew upgrade SectorOPS/Stash/stash
 ```
 
 ### Install from source
