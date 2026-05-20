@@ -14,3 +14,6 @@ dist/
 
 # Local-only demo-mode fixtures (STASH_DEMO=1) — never ship.
 src/demo.ts
+
+# Scratchpad for awesome-cli-coding-agents PR
+.stash-awesome-entry.md
