@@ -120,6 +120,9 @@ export async function runCli(rawArgs: string[]): Promise<number> {
     "help",
     "doctor",
     "check",
+    "search",
+    "s",
+    "find",
   ]);
 
   if (!reserved.has(args.command)) {
@@ -149,6 +152,10 @@ export async function runCli(rawArgs: string[]): Promise<number> {
     case "doctor":
     case "check":
       return await (await import("./doctor")).runDoctor();
+    case "search":
+    case "s":
+    case "find":
+      return await runSearchCommand(args);
     default:
       printHelp();
       return 1;
@@ -163,6 +170,25 @@ function flagBool(args: ParsedArgs, ...keys: string[]): boolean | undefined {
     }
   }
   return undefined;
+}
+
+async function runSearchCommand(args: ParsedArgs): Promise<number> {
+  const { runSearch } = await import("./search");
+  const initialQuery = args.positional.join(" ").trim() || undefined;
+  const skipPermissions = flagBool(args, "yolo", "y", "skip-permissions") ?? false;
+  const newWindow =
+    flagBool(args, "new-window", "w") ??
+    (flagBool(args, "here") === true ? false : undefined) ??
+    true;
+  const here = flagBool(args, "here") === true;
+  const dryRun = flagBool(args, "dry-run", "n") === true;
+  return await runSearch({
+    initialQuery,
+    skipPermissions,
+    newWindow,
+    here,
+    dryRun,
+  });
 }
 
 async function runInteractiveCommand(args: ParsedArgs): Promise<number> {
@@ -390,6 +416,7 @@ function printHelp(): void {
     `  stash where                    print the registry path`,
     `  stash edit                     open the registry in $EDITOR`,
     `  stash doctor                   verify each tool's session format still parses`,
+    `  stash search ${dim("[query]")}            fuzzy-search across every session, with preview pane`,
     "",
     `${pc.bold("FLAGS")} ${dim("(work with `stash` and `stash <name>`)")}`,
     `  -y, --yolo                     run with --dangerously-skip-permissions`,

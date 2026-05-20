@@ -37,6 +37,39 @@ $ stash
 └
 ```
 
+## What's new in 0.3
+
+- **`stash search`** — fuzzy-match across every session you've ever
+  opened in any of the three tools, with a live preview pane showing the
+  last user prompt and assistant reply for the focused row. No more
+  guessing which "refactor auth" session is the live one.
+- **First-prompt indexing** — search hits content, not just titles. If
+  your conversation 11 days ago was about "fanvue nsfw" and the AI never
+  generated a title, stash finds it anyway.
+- **`stash s` / `stash find`** aliases for the impatient.
+
+### Demo
+
+```
+$ stash search docker
+┌  stash  search across tools
+◆  stash search   › docker_
+│
+│  ─ results (3/3) ──────────────────
+│  ▸ claude   optima-docker  Read the markdown file       2h ago
+│    opencode optima-docker  Deploying ARM Docker on AWS  29d ago
+│    claude   Lycan          docker compose troubles      2d ago
+│
+│  ─ preview ────────────────────────
+│  469 msgs · ~344.6k tok · ~/Documents/Projects/Almas/optima-docker
+│
+│  you: Ok we can test it on a x86 24.04 lts tomorrow…
+│
+│  claude: Done. launch.md now has a Test plan section with a full runbook…
+│
+│  type to filter · ↑↓ navigate · enter resume · ctrl+c exit
+```
+
 ## What's new in 0.2
 
 - **`stash doctor`** — three checks across claude / codex / opencode that
