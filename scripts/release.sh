@@ -65,13 +65,16 @@ if [ -n "$(git status --porcelain)" ]; then
   exit 1
 fi
 
-# 1. Bump version
-tmp=$(mktemp)
-jq --arg v "$NEW" '.version = $v' package.json > "$tmp" && mv "$tmp" package.json
-
-# 2. Commit
-git add package.json
-git commit -m "Release ${NEW}"
+# 1. Bump version (no-op if it already matches — covers first releases
+#    where package.json was edited manually).
+if [ "$NEW" != "$CURRENT" ]; then
+  tmp=$(mktemp)
+  jq --arg v "$NEW" '.version = $v' package.json > "$tmp" && mv "$tmp" package.json
+  git add package.json
+  git commit -m "Release ${NEW}"
+else
+  echo "    package.json already at ${NEW}; skipping bump commit"
+fi
 
 # 3. Tag + push
 git tag "v${NEW}"
