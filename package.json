@@ -1,6 +1,6 @@
 {
   "name": "stash",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "Interactive launcher that resumes claude / codex / opencode sessions across all your projects.",
   "license": "MIT",
   "homepage": "https://github.com/SectorOPS/Stash",
